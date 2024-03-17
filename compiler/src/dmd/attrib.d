@@ -930,6 +930,7 @@ extern (C++) final class StaticForeachDeclaration : AttribDeclaration
 
         if (_scope)
         {
+            import dmd.statementsem : prepare;
             sfe.prepare(_scope); // lower static foreach aggregate
         }
         if (!sfe.ready())
