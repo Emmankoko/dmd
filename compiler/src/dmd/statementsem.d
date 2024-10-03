@@ -5198,3 +5198,37 @@ private void lowerNonArrayAggregate(Scope* sc)
     rangefe = null;
     lowerArrayAggregate(sc); // finally, turn generated array into expression tuple
 }
+
+    /*****************************************
+     * Perform `static foreach` lowerings that are necessary in order
+     * to finally expand the `static foreach` using
+     * `dmd.statementsem.makeTupleForeach`.
+     */
+    extern(D) void prepare(Scope* sc)
+    {
+        assert(sc);
+
+        if (aggrfe)
+        {
+            sc = sc.startCTFE();
+            aggrfe.aggr = aggrfe.aggr.expressionSemantic(sc);
+            sc = sc.endCTFE();
+        }
+
+        if (aggrfe && aggrfe.aggr.type.toBasetype().ty == Terror)
+        {
+            return;
+        }
+
+        if (!ready())
+        {
+            if (aggrfe && aggrfe.aggr.type.toBasetype().ty == Tarray)
+            {
+                lowerArrayAggregate(sc);
+            }
+            else
+            {
+                lowerNonArrayAggregate(sc);
+            }
+        }
+    }
