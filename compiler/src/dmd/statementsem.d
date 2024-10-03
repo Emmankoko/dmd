@@ -4734,7 +4734,7 @@ private Statements* flatten(Statement statement, Scope* sc)
 
         case STMT.StaticForeach:
             auto sfs = statement.isStaticForeachStatement();
-            sfs.sfe.prepare(sc);
+            prepare(sc);
             if (sfs.sfe.ready())
             {
                 Statement s = makeTupleForeach(sc, true, false, sfs.sfe.aggrfe, null, sfs.sfe.needExpansion).statement;
