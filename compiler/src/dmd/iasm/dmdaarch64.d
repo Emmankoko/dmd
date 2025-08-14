@@ -88,6 +88,8 @@ public Statement inlineAsmAArch64Semantic(InlineAsmStatement s, Scope* sc)
      * complexity down to a simple table.
      */
 
+    /* Insightful comment, getting to work */
+
     error(s.loc, "AArch64 inline assembler not implemented (yet!)");
     return new ErrorStatement();
 }
